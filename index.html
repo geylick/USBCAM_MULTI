@@ -1,0 +1,211 @@
+<head>
+
+    <meta charset="utf-8">
+
+</head>
+
+<font>
+
+<div>
+  <input type="button" value="ビデオ拡大" onclick="enlargeVideo()">
+  <input type="button" value="ビデオ縮小" onclick="shrinkVideo()">
+</div>
+</font>
+
+
+<div id = "select_list_A">
+  <select id="camera_list0" size="1" style="width:160pt;">
+    <option>(video0)</option>
+  </select>
+  <select id="camera_list1" size="1" style="width:160pt;">
+    <option>(video1)</option>
+  </select>
+</div>
+
+<div id="video_A">
+  <video id="video0"  autoplay></video>
+  <video id="video1"  autoplay></video>
+</div>
+
+<div id = "select_list_B">
+  <select id="camera_list2" size="1" style="width:160pt;">
+    <option>(video2)</option>
+  </select>
+  <select id="camera_list3" size="1" style="width:160pt;">
+    <option>(video3)</option>
+  </select>
+</div>
+
+<div id="video_B">
+  <video id="video2"  autoplay></video>
+  <video id="video3"  autoplay></video>
+</div>
+
+<script>
+
+
+  var cameraList0 = document.getElementById("camera_list0");
+  var cameraList1 = document.getElementById("camera_list1");
+  var cameraList2 = document.getElementById("camera_list2");
+  var cameraList3 = document.getElementById("camera_list3");
+
+
+  //
+  // WebカメラのデバイスIDの一覧を取得
+  //
+  /*
+  const cameraDeviceIds = [];
+  navigator.mediaDevices.enumerateDevices().then(function(mediaDevices) {
+    for (let len = mediaDevices.length, i = 0; i < len; i++) {
+      const item = mediaDevices[i];
+      // NOTE: カメラデバイスの場合、 kind プロパティには "videoinput" が入っている:
+      if (item.kind === "videoinput") {
+        const deviceId = item.deviceId;
+        const label = item.label;
+        // NOTE: ここでデバイスID（とラベル）を適当な変数に保存しておく
+        //cameraDeviceIds.push({ deviceId, label });
+
+        //var id = device.deviceId;
+        //var label = device.label || 'camera'; // label is available for https
+      }
+    }
+  });
+  */
+
+  //
+  //selectboxを初期化
+  //
+  function clearDeviceList() {
+   while(cameraList0.lastChild) {
+    cameraList0.removeChild(cameraList0.lastChild);
+   }
+   while(cameraList1.lastChild) {
+    cameraList1.removeChild(cameraList1.lastChild);
+   }
+   while(cameraList2.lastChild) {
+    cameraList2.removeChild(cameraList2.lastChild);
+   }
+   while(cameraList3.lastChild) {
+    cameraList3.removeChild(cameraList3.lastChild);
+   }
+  }
+
+  //
+  //selectboxにデバイスを追加
+  //
+  function addDevice(device) {
+   if (device.kind === 'videoinput') {
+    var id = device.deviceId;
+    var label = device.label || 'camera'; // label is available for https
+    var option = document.createElement('option');
+    option.setAttribute('value', id);
+    option.innerHTML = label + '(' + id + ')';
+    (cameraList0).appendChild(option);
+
+    option.setAttribute('value', id);
+    option.innerHTML = label + '(' + id + ')';
+    (cameraList1).appendChild(option);
+
+    option.setAttribute('value', id);
+    option.innerHTML = label + '(' + id + ')';
+    (cameraList2).appendChild(option);
+
+    option.setAttribute('value', id);
+    option.innerHTML = label + '(' + id + ')';
+    (cameraList3).appendChild(option);
+   }
+   else {
+    console.error('UNKNOWN Device kind:' + device.kind);
+   }
+  }
+
+  //
+  //デバイスリストを取得
+  //
+  function getDeviceList() {
+   clearDeviceList();
+   navigator.mediaDevices.enumerateDevices()
+   .then(function(devices) {
+    devices.forEach(function(device) {
+     console.log(device.kind + ": " + device.label +
+                 " id = " + device.deviceId);
+     addDevice(device);
+    });
+   })
+   .catch(function(err) {
+    console.error('enumerateDevide ERROR:', err);
+   });
+  }
+
+  //
+  //選択された要素を取得
+  //
+  function getSelectedVideo(num) {
+   var cameraList = document.getElementById("camera_list"+num)
+   var id = cameraList.options[cameraList.selectedIndex].value;
+   return id;
+  }
+
+//
+//WEBカメラ起動
+//
+function start(){
+  getDeviceList()
+  for(i = 0; i < 4; i++){
+    var deviceId = getSelectedVideo(i);
+    const video = document.getElementById("video" + i)
+    navigator.mediaDevices.getUserMedia({
+      audio: false,
+      video: {deviceId: cameraDeviceIds[i]},
+    }).then(function(stream) {
+      video.srcObject = stream;
+    }).catch(function(e) {
+      alert("ERROR: Webカメラの起動に失敗しました: " + e.message);
+    });
+  }
+}
+
+
+//
+//ビデオ拡大
+//
+function enlargeVideo() {
+  for(let i = 0; i < 3; i++){
+    var target = document.getElementById("video" + i);
+
+    if (target.width === 0) {
+      var orgWidth  = target.videoWidth;
+      var orgHeight = target.videoHeight;
+    } else {
+      var orgWidth  = target.width;
+      var orgHeight = target.height;
+    }
+
+    target.width = orgWidth*1.1;  //縦横1.1倍
+    target.height = orgHeight*1.1;
+  }
+}
+
+//
+//ビデオ縮小
+//
+function shrinkVideo() {
+  for(let i = 0; i < 3; i++){
+    var target = document.getElementById("video" + i);
+
+    if (target.width === 0) {
+      var orgWidth  = target.videoWidth;
+      var orgHeight = target.videoHeight;
+    } else {
+      var orgWidth  = target.width;
+      var orgHeight = target.height;
+    }
+
+    target.width = orgWidth*0.9;  //縦横0.9倍
+    target.height = orgHeight*0.9;
+  }
+}
+
+window.onload = start();
+
+</script>
