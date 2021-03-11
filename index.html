@@ -38,13 +38,19 @@
         console.log('navigator.MediaDevices.getUserMedia error: ', error.message, error.name);
       }
 
+      console.log(arr[0])
+      console.log(arr[1])
+      console.log(arr[2])
+      console.log(arr[3])
+
+
         //Video1再生
         const video1 = document.getElementById("video1")
         navigator.mediaDevices.getUserMedia({
             audio: false,
             //video: true,
 		           //video: { facingMode: "user" },//インカメラ
-               video: { deviceId: { exact: arr[0]} }           
+               video: { deviceId: { exact: "'"+arr[0]+"'"} }           
         }).then(stream => {
             video1.srcObject = stream;
             video1.play()
@@ -58,7 +64,7 @@
             audio: false,
             //video: true,
 		          //video: { facingMode: "environment" },//背面カメラ
-              video: { deviceId: { exact: arr[1]} }            
+              video: { deviceId: { exact: "'"+arr[1]+"'"} }
         }).then(stream => {
             video2.srcObject = stream;
             video2.play()
@@ -71,8 +77,8 @@
         navigator.mediaDevices.getUserMedia({
             audio: false,
             //video: true,
-              video: { deviceId: { exact: "98af8633b7068277c5417252170a6a85eab104c4c75c2cf45503651b3733018e"} }
-		          //video: { deviceId: arr[3] },//背面カメラ            
+              video: { deviceId: { exact: "'"+arr[2]+"'"} }
+		          //video: { deviceId: arr[3] },//背面カメラ
         }).then(stream => {
             video3.srcObject = stream;
             video3.play()
