@@ -10,8 +10,8 @@
   <p>映像をクリックで消すことができます</p>
 
   <div>
-    <input type="button" value="ビデオ拡大" onclick="enlargeVideo()">
-    <input type="button" value="ビデオ縮小" onclick="shrinkVideo()">
+    <input type="button" value="ビデオ拡大" onclick="resizeVideo(0)"> 
+    <input type="button" value="ビデオ縮小" onclick="resizeVideo(1)">
   </div>
 
   <br>
@@ -82,9 +82,9 @@ function video_remove(num){
 }
 
 //
-//ビデオ拡大
+//ビデオ拡大・縮小
 //
-function enlargeVideo() {
+function resizeVideo(BigSmall) {  //０のとき拡大、１のとき縮小
   for(let i = 0; i < 6; i++){
     var target = document.getElementById("video" + i);
     if (target == null) {
@@ -99,31 +99,13 @@ function enlargeVideo() {
       var orgHeight = target.height;
     }
 
-    target.width = orgWidth*1.1;  //縦横1.1倍
-    target.height = orgHeight*1.1;
-  }
-}
-
-//
-//ビデオ縮小
-//
-function shrinkVideo() {
-  for(let i = 0; i < 6; i++){
-    var target = document.getElementById("video" + i);
-    if (target == null) {
-      continue;
-    }
-
-    if (target.width === 0) {
-      var orgWidth  = target.videoWidth;
-      var orgHeight = target.videoHeight;
+    if (BigSmall === 0) {
+      target.width = orgWidth*1.1;  //縦横1.1倍
+      target.height = orgHeight*1.1;
     } else {
-      var orgWidth  = target.width;
-      var orgHeight = target.height;
+      target.width = orgWidth*0.9;  //縦横0.9倍
+      target.height = orgHeight*0.9;
     }
-
-    target.width = orgWidth*0.9;  //縦横0.9倍
-    target.height = orgHeight*0.9;
   }
 }
 
