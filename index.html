@@ -13,13 +13,14 @@
     </div>
     <script>
 
+    var arr = [];
+
       //デバイス一覧取得
       navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
 
       //デバイス情報取得
       function gotDevices(deviceInfos) {
         // Handles being called several times to update labels. Preserve values.
-        var arr = [];
         for (let i = 0; i !== deviceInfos.length; ++i) {
           const deviceInfo = deviceInfos[i];
           if (deviceInfo.kind === 'videoinput') {
