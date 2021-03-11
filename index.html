@@ -99,7 +99,7 @@ function start(){
   navigator.mediaDevices.getUserMedia({
       audio: false,
       //video: true,
-        video: { deviceId: { exact: arr[3]} }
+        video: { deviceId: { exact: arr[0]} }
         //video: { deviceId: arr[3] },//背面カメラ
   }).then(stream => {
       video3.srcObject = stream;
