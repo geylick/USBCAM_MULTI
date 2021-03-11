@@ -59,15 +59,26 @@ function start(){
     const video3 = document.getElementById("video3");
 
     for (let i=0; i<4; i++){
-      const video_buf = "video" + i;
       navigator.mediaDevices.getUserMedia({
           audio: false,
           //video: true,
             video: { deviceId: { exact: arr[i]} }
             //video: { deviceId: arr[3] },//背面カメラ
       }).then(stream => {
-          video_buf.srcObject = stream;
-          video_buf.play()
+        switch (i){
+          case 0;
+            video0.srcObject = stream;
+            video0.play()
+          case 1;
+            video1.srcObject = stream;
+            video1.play()
+          case 2;
+            video2.srcObject = stream;
+            video2.play()
+          case 3;
+            video3.srcObject = stream;
+            video3.play()
+        }
       }).catch(e => {
         console.log(e)
       })
