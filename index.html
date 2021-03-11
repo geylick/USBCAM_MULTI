@@ -14,12 +14,12 @@
   <br>
 
     <div>
-            <video id="video0"></video>
-            <video id="video1"></video>
-            <video id="video2"></video>
-            <video id="video3"></video>
-            <video id="video4"></video>
-            <video id="video5"></video>
+            <video id="video0" onclick="video_remove(0)"></video>
+            <video id="video1" onclick="video_remove(1)"></video>
+            <video id="video2" onclick="video_remove(2)"></video>
+            <video id="video3" onclick="video_remove(3)"></video>
+            <video id="video4" onclick="video_remove(4)"></video>
+            <video id="video5" onclick="video_remove(5)"></video>
     </div>
     <script>
 
@@ -134,6 +134,13 @@ function start(){
   })
 }
 
+//
+//ビデオ削除
+//
+function video_remove(num){
+  const element = document.getElementById("video"+num)
+  element.remove()
+}
 
 //
 //ビデオ拡大
