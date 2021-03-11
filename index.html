@@ -14,10 +14,10 @@
   <br>
 
     <div>
+            <video id="video0"></video>
             <video id="video1"></video>
             <video id="video2"></video>
             <video id="video3"></video>
-            <video id="video4"></video>
     </div>
     <script>
 
@@ -52,6 +52,20 @@
 //ビデオ再生
 //
 function start(){
+  //Video0再生
+  const video0 = document.getElementById("video0")
+  navigator.mediaDevices.getUserMedia({
+      audio: false,
+      //video: true,
+        video: { deviceId: { exact: arr[0]} }
+        //video: { deviceId: arr[3] },//背面カメラ
+  }).then(stream => {
+      video0.srcObject = stream;
+      video0.play()
+  }).catch(e => {
+    console.log(e)
+  })
+
   //Video1再生
   const video1 = document.getElementById("video1")
   navigator.mediaDevices.getUserMedia({
@@ -93,20 +107,6 @@ function start(){
   }).catch(e => {
     console.log(e)
   })
-
-  //Video0再生
-  const video4 = document.getElementById("video4")
-  navigator.mediaDevices.getUserMedia({
-      audio: false,
-      //video: true,
-        video: { deviceId: { exact: arr[4]} }
-        //video: { deviceId: arr[3] },//背面カメラ
-  }).then(stream => {
-      video4.srcObject = stream;
-      video4.play()
-  }).catch(e => {
-    console.log(e)
-  })
 }
 
 
@@ -114,7 +114,7 @@ function start(){
 //ビデオ拡大
 //
 function enlargeVideo() {
-  for(let i = 1; i < 5; i++){
+  for(let i = 0; i < 4; i++){
     var target = document.getElementById("video" + i);
 
     if (target.width === 0) {
@@ -134,7 +134,7 @@ function enlargeVideo() {
 //ビデオ縮小
 //
 function shrinkVideo() {
-  for(let i = 1; i < 5; i++){
+  for(let i = 0; i < 4; i++){
     var target = document.getElementById("video" + i);
 
     if (target.width === 0) {
