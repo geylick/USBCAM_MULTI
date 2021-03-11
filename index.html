@@ -43,7 +43,7 @@
         navigator.mediaDevices.getUserMedia({
             video: true,
 		           //video: { facingMode: "user" },//インカメラ
-               video: { deviceId: { exact: arr[0]} }
+               {video: { deviceId: { exact: arr[0]} }}
             audio: false,
         }).then(stream => {
             video1.srcObject = stream;
@@ -57,7 +57,7 @@
         navigator.mediaDevices.getUserMedia({
             video: true,
 		          //video: { facingMode: "environment" },//背面カメラ
-              video: { deviceId: { exact: arr[1]} }
+              {video: { deviceId: { exact: arr[1]} }}
             audio: false,
         }).then(stream => {
             video2.srcObject = stream;
@@ -70,7 +70,7 @@
         const video3 = document.getElementById("video3")
         navigator.mediaDevices.getUserMedia({
             video: true,
-              video: { deviceId: { exact: "98af8633b7068277c5417252170a6a85eab104c4c75c2cf45503651b3733018e"} } 
+              {video: { deviceId: { exact: "98af8633b7068277c5417252170a6a85eab104c4c75c2cf45503651b3733018e"} } }
 		          //video: { deviceId: arr[3] },//背面カメラ
             audio: false,
         }).then(stream => {
